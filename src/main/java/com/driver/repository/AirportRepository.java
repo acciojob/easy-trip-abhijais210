@@ -12,13 +12,13 @@ import java.util.logging.Handler;
 
 @Repository
 public class AirportRepository {
-    private HashMap<Integer,Integer> flightRevenue;
-    private HashMap<Date,Set<Flight>> dateFlightDb;//gives list of flights  for that particular Date.
-    private HashMap<Integer,Set<Integer>> passengerFlightDb;//database to store how many flights a passenger has booked so far.
-    private HashMap<Integer, Set<Integer>> flightPassengerDetailsDb;//gives the list of passenger who have booked this flight.
-    private HashMap<Integer, Passenger> passengerDb;
-    private HashMap<City, Airport> cityAirportDb;
-    private HashMap<Integer,Flight> flightDb;
+    public HashMap<Integer,Integer> flightRevenue;
+    public HashMap<Date,Set<Flight>> dateFlightDb;//gives list of flights  for that particular Date.
+    public HashMap<Integer,Set<Integer>> passengerFlightDb;//database to store how many flights a passenger has booked so far.
+    public HashMap<Integer, Set<Integer>> flightPassengerDetailsDb;//gives the list of passenger who have booked this flight.
+    public HashMap<Integer, Passenger> passengerDb;
+    public HashMap<City, Airport> cityAirportDb;
+    public HashMap<Integer,Flight> flightDb;
 
     public AirportRepository() {
         this.passengerDb = new HashMap<Integer, Passenger>();
