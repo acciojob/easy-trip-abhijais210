@@ -18,20 +18,20 @@ public class AirportRepository {
     public HashMap<City, Airport> cityAirportDb = new HashMap<>();
     public HashMap<Integer,Flight> flightDb = new HashMap<>();
 
-    public String addPassenger(Passenger passenger){
+    public String addPassenger(Passenger passenger) throws NullPointerException{
         int key = passenger.getPassengerId();
         passengerDb.put(key,passenger);
         passengerFlightDb.put(passenger.getPassengerId(),new HashSet<>());
         return "SUCCESS";
     }
-    public String addAirport(Airport airport){
+    public String addAirport(Airport airport) throws NullPointerException{
         City key = airport.getCity();
         cityAirportDb.put(key,airport);
         return "SUCCESS";
     }
 
 
-    public String getLargestAirportName(){
+    public String getLargestAirportName() throws NullPointerException{
         String largestAirport  = "";
         int maxTerminal = 0;
         for(Airport airport : cityAirportDb.values()) {
@@ -45,7 +45,7 @@ public class AirportRepository {
         }
         return largestAirport;
     }
-    public String addFlight(Flight flight){
+    public String addFlight(Flight flight) throws NullPointerException{
         //if there is no Airport from where flight would take OFF and where it goes then return null
         if(!cityAirportDb.containsKey(flight.getFromCity()) || (!cityAirportDb.containsKey(flight.getToCity()))){
             return null;
@@ -68,7 +68,7 @@ public class AirportRepository {
         flightRevenue.put(flightId,0);
         return "SUCCESS";
     }
-    public Flight getFlightById(int flightId){
+    public Flight getFlightById(int flightId) throws NullPointerException{
         return flightDb.get(flightId);
     }
     public Airport getAirportByName(String name){
@@ -78,7 +78,7 @@ public class AirportRepository {
         }
         return null;
     }
-    public String getAirportNameFromFlightId(Integer flightId){
+    public String getAirportNameFromFlightId(Integer flightId) throws NullPointerException{
         //first we check if this flight present or not in our DataBase
         if(!flightDb.containsKey(flightId))
             return null;
@@ -92,7 +92,7 @@ public class AirportRepository {
 
         return null;
     }
-    public double getShortestDurationOfPossibleBetweenTwoCities(City fromCity,City toCity){
+    public double getShortestDurationOfPossibleBetweenTwoCities(City fromCity,City toCity) throws NullPointerException{
         double shortestDuration = 1000000000;
         //now we will check in every flight if there is a flight from these city and if yes then check for shortest durstion
         for(Flight flight : flightDb.values()){
@@ -102,7 +102,7 @@ public class AirportRepository {
         }
         return shortestDuration != 1000000000 ? shortestDuration : -1;
     }
-    public String bookATicket(Integer flightId,Integer passengerId){
+    public String bookATicket(Integer flightId,Integer passengerId) throws NullPointerException{
         //Check if this is a valid flight and passenger or Not
         if((!flightDb.containsKey(flightId)) || (!passengerDb.containsKey(passengerId)))
             return "FAILURE";
@@ -138,7 +138,7 @@ public class AirportRepository {
 
         return "SUCCESS";
     }
-    public String cancelATicket(Integer flightId,Integer passengerId){
+    public String cancelATicket(Integer flightId,Integer passengerId) throws NullPointerException{
         //Check if this is a valid flight and passenger or Not and
         if((!flightDb.containsKey(flightId)) || (!passengerDb.containsKey(passengerId)) && passengerFlightDb.get(passengerId) == null)
             return "FAILURE";
@@ -173,13 +173,13 @@ public class AirportRepository {
 
         return "SUCCESS";
     }
-    public int countOfBookingsDoneByPassengerAllCombined(Integer passengerId){
+    public int countOfBookingsDoneByPassengerAllCombined(Integer passengerId) throws NullPointerException{
         if(!passengerDb.containsKey(passengerId))
             return 0;
 
         return passengerFlightDb.get(passengerId).size();
     }
-    public int getNumberOfPeopleOn(Date date,String airportName){
+    public int getNumberOfPeopleOn(Date date,String airportName) throws NullPointerException{
         //if on that date there is no flight just return ZERO
         if(!dateFlightDb.containsKey(date) && dateFlightDb.get(date) == null)
             return 0;
@@ -202,13 +202,13 @@ public class AirportRepository {
         }
         return totalPassenger;
     }
-    public int calculateFlightFare(int flightId){
+    public int calculateFlightFare(int flightId) throws NullPointerException{
         if(!flightDb.containsKey(flightId) && flightPassengerDetailsDb.get(flightId) == null)
             return 0;
 
         return 3000 + (flightPassengerDetailsDb.get(flightId).size())*50;
     }
-    public int calculateRevenueOfAFlight(Integer flightId){
+    public int calculateRevenueOfAFlight(Integer flightId) throws NullPointerException{
         return flightRevenue.get(flightId);
     }
 }
