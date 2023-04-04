@@ -45,6 +45,6 @@ public class AirportService {
         return airportRepository.calculateFlightFare(flightId);
     }
     public int calculateRevenueOfAFlight(Integer flightId){
-        return calculateRevenueOfAFlight(flightId);
+        return airportRepository.calculateRevenueOfAFlight(flightId);
     }
 }
