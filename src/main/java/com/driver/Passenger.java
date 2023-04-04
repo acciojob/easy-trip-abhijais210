@@ -1,4 +1,4 @@
-package com.driver.model;
+package com.driver;
 
 public class Passenger {
 
