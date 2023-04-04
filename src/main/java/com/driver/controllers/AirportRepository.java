@@ -10,23 +10,13 @@ import java.util.*;
 
 @Repository
 public class AirportRepository {
-    private HashMap<Integer,Integer> flightRevenue;
-    private HashMap<Date,Set<Flight>> dateFlightDb;//gives list of flights  for that particular Date.
-    private HashMap<Integer,Set<Integer>> passengerFlightDb;//database to store how many flights a passenger has booked so far.
-    private HashMap<Integer, Set<Integer>> flightPassengerDetailsDb;//gives the list of passenger who have booked this flight.
-    private HashMap<Integer, Passenger> passengerDb;
-    private HashMap<City, Airport> cityAirportDb;
-    private HashMap<Integer,Flight> flightDb;
-
-    public AirportRepository() {
-        this.passengerDb = new HashMap<Integer, Passenger>();
-        this.flightDb = new HashMap<Integer,Flight>();
-        this.flightRevenue = new HashMap<Integer,Integer>();
-        this.cityAirportDb = new HashMap<City, Airport>();
-        this.dateFlightDb = new HashMap<Date,Set<Flight>>();
-        this.flightPassengerDetailsDb = new HashMap<Integer, Set<Integer>>();
-        this.passengerFlightDb = new HashMap<Integer,Set<Integer>>();
-    }
+    public HashMap<Integer,Integer> flightRevenue = new HashMap<>();
+    public HashMap<Date,Set<Flight>> dateFlightDb = new HashMap<>();//gives list of flights  for that particular Date.
+    public HashMap<Integer,Set<Integer>> passengerFlightDb = new HashMap<>();//database to store how many flights a passenger has booked so far.
+    public HashMap<Integer, Set<Integer>> flightPassengerDetailsDb = new HashMap<>();//gives the list of passenger who have booked this flight.
+    public HashMap<Integer, Passenger> passengerDb = new HashMap<>();
+    public HashMap<City, Airport> cityAirportDb = new HashMap<>();
+    public HashMap<Integer,Flight> flightDb = new HashMap<>();
 
     public String addPassenger(Passenger passenger){
         int key = passenger.getPassengerId();
@@ -230,61 +220,5 @@ public class AirportRepository {
     }
     public int calculateRevenueOfAFlight(Integer flightId){
         return flightRevenue.get(flightId);
-    }
-
-    public HashMap<Integer, Integer> getFlightRevenue() {
-        return flightRevenue;
-    }
-
-    public void setFlightRevenue(HashMap<Integer, Integer> flightRevenue) {
-        this.flightRevenue = flightRevenue;
-    }
-
-    public HashMap<Date, Set<Flight>> getDateFlightDb() {
-        return dateFlightDb;
-    }
-
-    public void setDateFlightDb(HashMap<Date, Set<Flight>> dateFlightDb) {
-        this.dateFlightDb = dateFlightDb;
-    }
-
-    public HashMap<Integer, Set<Integer>> getPassengerFlightDb() {
-        return passengerFlightDb;
-    }
-
-    public void setPassengerFlightDb(HashMap<Integer, Set<Integer>> passengerFlightDb) {
-        this.passengerFlightDb = passengerFlightDb;
-    }
-
-    public HashMap<Integer, Set<Integer>> getFlightPassengerDetailsDb() {
-        return flightPassengerDetailsDb;
-    }
-
-    public void setFlightPassengerDetailsDb(HashMap<Integer, Set<Integer>> flightPassengerDetailsDb) {
-        this.flightPassengerDetailsDb = flightPassengerDetailsDb;
-    }
-
-    public HashMap<Integer, Passenger> getPassengerDb() {
-        return passengerDb;
-    }
-
-    public void setPassengerDb(HashMap<Integer, Passenger> passengerDb) {
-        this.passengerDb = passengerDb;
-    }
-
-    public HashMap<City, Airport> getCityAirportDb() {
-        return cityAirportDb;
-    }
-
-    public void setCityAirportDb(HashMap<City, Airport> cityAirportDb) {
-        this.cityAirportDb = cityAirportDb;
-    }
-
-    public HashMap<Integer, Flight> getFlightDb() {
-        return flightDb;
-    }
-
-    public void setFlightDb(HashMap<Integer, Flight> flightDb) {
-        this.flightDb = flightDb;
     }
 }
