@@ -1,5 +1,9 @@
-package com.driver;
+package com.driver.controllers;
 
+import com.driver.model.Airport;
+import com.driver.model.City;
+import com.driver.model.Flight;
+import com.driver.model.Passenger;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -22,7 +26,7 @@ public class AirportService {
     public String getAirportNameFromFlightId(Integer flightId){
         return airportRepository.getAirportNameFromFlightId(flightId);
     }
-    public double getShortestDurationOfPossibleBetweenTwoCities(City fromCity,City toCity){
+    public double getShortestDurationOfPossibleBetweenTwoCities(City fromCity, City toCity){
         return airportRepository.getShortestDurationOfPossibleBetweenTwoCities(fromCity,toCity);
     }
     public String bookATicket(Integer flightId,Integer passengerId){

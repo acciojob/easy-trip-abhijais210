@@ -1,5 +1,9 @@
-package com.driver;
+package com.driver.controllers;
 
+import com.driver.model.Airport;
+import com.driver.model.City;
+import com.driver.model.Flight;
+import com.driver.model.Passenger;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;

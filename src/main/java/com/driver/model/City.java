@@ -1,4 +1,4 @@
-package com.driver;
+package com.driver.model;
 
 public enum City {
 
