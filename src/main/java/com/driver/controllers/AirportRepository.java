@@ -20,39 +20,27 @@ public class AirportRepository {
 
     public String addPassenger(Passenger passenger){
         int key = passenger.getPassengerId();
-
-        //if we have a passenger with same ID then we would not create a new passenger
-        if(passengerDb.containsKey(key)){
-            return null;
-        }
         passengerDb.put(key,passenger);
         passengerFlightDb.put(passenger.getPassengerId(),new HashSet<>());
         return "SUCCESS";
     }
     public String addAirport(Airport airport){
         City key = airport.getCity();
-        //if City has already a airport then simple return
-        if(cityAirportDb.containsKey(key)){
-            return null;
-        }
         cityAirportDb.put(key,airport);
         return "SUCCESS";
     }
 
 
     public String getLargestAirportName(){
-        String largestAirport  = null;
+        String largestAirport  = "";
         int maxTerminal = 0;
-        for(Airport airport : cityAirportDb.values()){
-            if(airport.getNoOfTerminals() >= maxTerminal){
-                if(airport.getNoOfTerminals() > maxTerminal){
-                    maxTerminal = airport.getNoOfTerminals();
+        for(Airport airport : cityAirportDb.values()) {
+            if (airport.getNoOfTerminals() > maxTerminal) {
+                maxTerminal = airport.getNoOfTerminals();
+                largestAirport = airport.getAirportName();
+            } else if (airport.getNoOfTerminals() == maxTerminal) {
+                if (airport.getAirportName().compareTo(largestAirport) < 0)
                     largestAirport = airport.getAirportName();
-                }else {
-                    assert largestAirport != null;
-                    if(airport.getAirportName().compareTo(largestAirport) < 0)
-                        largestAirport = airport.getAirportName();
-                }
             }
         }
         return largestAirport;
@@ -105,14 +93,14 @@ public class AirportRepository {
         return null;
     }
     public double getShortestDurationOfPossibleBetweenTwoCities(City fromCity,City toCity){
-        double shortestDuration = Integer.MAX_VALUE;
+        double shortestDuration = 1000000000;
         //now we will check in every flight if there is a flight from these city and if yes then check for shortest durstion
         for(Flight flight : flightDb.values()){
-            if(flight.getFromCity().equals(fromCity) && flight.getToCity().equals(toCity) && flight.getDuration() < shortestDuration){
-                shortestDuration = flight.getDuration();
+            if(flight.getFromCity().equals(fromCity) && flight.getToCity().equals(toCity)){
+                shortestDuration = Math.min(flight.getDuration(),shortestDuration);
             }
         }
-        return shortestDuration != Integer.MAX_VALUE ? shortestDuration : -1;
+        return shortestDuration != 1000000000 ? shortestDuration : -1;
     }
     public String bookATicket(Integer flightId,Integer passengerId){
         //Check if this is a valid flight and passenger or Not
@@ -125,7 +113,9 @@ public class AirportRepository {
             return "FAILURE";
 
         //if passenger has already booked that flight then passenger can not book that flight
-        if(flightPassengerDetailsDb.get(flightId).contains(passengerId))
+        if(flightPassengerDetailsDb.get(flightId).contains(passengerId) && flightPassengerDetailsDb.get(flightId) == null)
+            return "FAILURE";
+        if(passengerFlightDb.get(passengerId) == null)
             return "FAILURE";
 
         //else passenger can free to book a ticket
@@ -150,11 +140,11 @@ public class AirportRepository {
     }
     public String cancelATicket(Integer flightId,Integer passengerId){
         //Check if this is a valid flight and passenger or Not and
-        if((!flightDb.containsKey(flightId)) || (!passengerDb.containsKey(passengerId)))
+        if((!flightDb.containsKey(flightId)) || (!passengerDb.containsKey(passengerId)) && passengerFlightDb.get(passengerId) == null)
             return "FAILURE";
 
         //if passenger has booked  ticket but not for this flight
-        if(!passengerFlightDb.get(passengerId).contains(flightId))
+        if(!passengerFlightDb.get(passengerId).contains(flightId) && flightPassengerDetailsDb.get(flightId) == null)
             return "FAILURE";
 
 
@@ -191,7 +181,7 @@ public class AirportRepository {
     }
     public int getNumberOfPeopleOn(Date date,String airportName){
         //if on that date there is no flight just return ZERO
-        if(!dateFlightDb.containsKey(date))
+        if(!dateFlightDb.containsKey(date) && dateFlightDb.get(date) == null)
             return 0;
 
         //check if airport with name Exists or not
@@ -213,7 +203,7 @@ public class AirportRepository {
         return totalPassenger;
     }
     public int calculateFlightFare(int flightId){
-        if(!flightDb.containsKey(flightId))
+        if(!flightDb.containsKey(flightId) && flightPassengerDetailsDb.get(flightId) == null)
             return 0;
 
         return 3000 + (flightPassengerDetailsDb.get(flightId).size())*50;
