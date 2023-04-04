@@ -106,9 +106,14 @@ public class AirportRepository {
         if(!flightDb.containsKey(flightId))
             return null;
 
+
         Flight flight = getFlightById(flightId);
         City city = flight.getFromCity();
-        return cityAirportDb.get(city).getAirportName();
+
+        if(cityAirportDb.containsKey(city))
+            return cityAirportDb.get(city).getAirportName();
+
+        return null;
     }
     public double getShortestDurationOfPossibleBetweenTwoCities(City fromCity,City toCity){
         double shortestDuration = Integer.MAX_VALUE;
